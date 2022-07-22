@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 # Displays information about the file `holbertonschool`.
 
 if [ -e "school" ]
