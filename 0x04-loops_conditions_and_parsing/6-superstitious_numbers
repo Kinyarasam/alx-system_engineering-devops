@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 # displays numbers from 1 to 20:
 #   "bad luck from China" for the 4th iteration
 #   "bad luck from Japan" for the 9th iteration
