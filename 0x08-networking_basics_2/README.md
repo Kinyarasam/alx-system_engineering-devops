@@ -42,3 +42,4 @@ The files in this folder are scripts written in Bash and executed on Ubuntu 20.0
 | Files | Description |
 |-------|-------------|
 |[0. Change your home IP](./0-change_your_home_IP)|Configures an Ubuntu server with given specifications|
+|[1. Show attached IPs](./1-show_attached_IPs)|Displays all active IPv4 IPs on the machine it’s executed on.|
