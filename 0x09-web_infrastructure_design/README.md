@@ -13,8 +13,4 @@ For this project, look at these concepts:
 - [Load balancer](https://alx-intranet.hbtn.io/concepts/46)
 - [Server](https://alx-intranet.hbtn.io/concepts/67)
 
-<video width="320" height="240" autoplay muted>
-  <source src="https://youtu.be/lQNEW76KdYg" type="video/mp4">
-  <source src="https://youtu.be/lQNEW76KdYg" type="video/ogg">
-Your browser does not support the video tag.
-</video>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lQNEW76KdYg" title="web infrastructure" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
