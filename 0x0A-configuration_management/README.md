@@ -17,4 +17,4 @@ Thanks to Puppet, we were able to restore our infrastructure to normal operation
 
 Obviously writing Puppet code for your infrastructure requires an investment of time and energy, but in the long term, it is for sure a must-have.
 
-[This was me ^\_^':](./assets/4i8il3B.gif)
+![This was me ^\_^':](./assets/4i8il3B.gif)
