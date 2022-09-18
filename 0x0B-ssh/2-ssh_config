@@ -1,0 +1,7 @@
+# ssh config file
+Host *
+User ubuntu
+	PubKeyAuthentication yes
+	IdentityFile ~/.ssh/school
+	PasswordAuthentication no
+	ForwardAgent yes
