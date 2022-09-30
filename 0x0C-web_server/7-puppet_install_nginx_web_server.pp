@@ -1,76 +1,31 @@
 # Configuring your server
 
-# add stable version of nginx
-exec { 'add nginx stable repo':
-  command => 'sudo add-apt-repository ppa:nginx/stable',
-  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+# Setup New Ubuntu server with nginx
+exec { 'update system':
+  command => '/usr/bin/apt-get update',
 }
 
-# update software packages list
-exec { 'update packages':
-  command => 'apt get update'
-  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-}
-
-# Install nginx
+# Update package dependancies and install nginx
 package { 'nginx':
-  ensure => 'installed',
-}
-
-# allow HTTP
-exec { 'allow HTTP':
-  command => "ufw allow 'Nginx HTTP'",
-  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
-  onlyif  => '! dpkg -l nginx | egrep \'îi.*nginx\' > /dev/null 2>&1',
+  ensure  => 'installed',
+  require => Exec['update system']
 }
 
 # create index file
-file { '/var/www/html/index.nginx-debian.html':
-  content => "Hello World!\n",
+file {'/var/www/html/index.nginx-debian.html':
+  content => 'Hello World!
+'
 }
 
-# create index file
-file { '/var/www/html/custom_404.html':
-  content => "Ceci n'est pas une page\n",
+# add redirection
+exec {'redirect_me':
+  command  => 'sed -i "24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default',
+  provider => 'shell'
 }
 
-# add redirection and error page
-file { 'Nginx default config file':
-  ensure  => file,
-  path    => '/etc/nginx/sites-enabled/default',
-  content =>
-"server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html
-	server_name _;
-	
-	# Redirec_me 301 permanent redirect to https://www.youtube.com/watch?v=QH2-TGUlwu4
-	location /redirect_me {
-		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-	}
-	location / {
-		try_files \$uri \$uri/ =404;
-	}
-	# Custom 404 error page
-	error_page 404 /custom_404.html;
-	location = /custom_404.html {
-		root /var/www/html;
-		internal;
-	}
-}",
-}
-
-# restart nginx
-exec { 'restart service':
-  command => 'service nginx restart',
-  path    => '/usr/bin:/usr/sbin:/bin',
-}
-
-# start service nginx
-service { 'nginx':
+# nginx status
+service {'nginx':
   ensure  => running,
-  require => Package['nginx'],
+  require => Package['nginx']
 }
 
