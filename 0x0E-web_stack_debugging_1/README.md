@@ -9,7 +9,7 @@ _For this project, we expect you to look at these concepts:_
 	- [Web stack debugging](https://alx-intranet.hbtn.io/concepts/68)
 
 ---
-![Debugging](/Assets/B4eeypV.jpg)
+![Debugging](./Assets/B4eeypV.jpg)
 
 ---
 ## Requirements
