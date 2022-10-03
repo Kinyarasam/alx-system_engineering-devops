@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Install, configure and starts the load balancer
+sudo apt-get install -y haproxy
+SERVER_CONFIG="\
+
+#--kinyarasam.tech-params-begin--
+backend kinyarasam.tech-backend
+        balance roundrobin
+        server 20913-web-01 3.237.48.138:80 check
+        server 20913-web-02 3.236.118.156:80 check
+
+frontend kinyarasam.tech-frontend
+        bind *:80
+        mode http
+        default_backend kinyarasam.tech-backend
+#--kinyarasam.tech-params-end--
+"
+
+echo "$SERVER_CONFIG" >> /etc/haproxy/haproxy.cfg
+sudo service haproxy start
