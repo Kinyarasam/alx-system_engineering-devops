@@ -3,6 +3,8 @@
 
 Returns:
     Employee information about his/her TODO list progress.
+Notes:
+    Implemented Using Recursion
 """
 
 import requests
@@ -10,7 +12,7 @@ import sys
 import re
 
 
-# REST API url
+"""REST API url"""
 REST_API = 'https://jsonplaceholder.typicode.com'
 ID = sys.argv[1]
 
