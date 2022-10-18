@@ -17,7 +17,8 @@ REST_API = 'https://jsonplaceholder.typicode.com'
 ID = sys.argv[1]
 
 
-if __name__ == "__main__":
+def rest_api():
+    """ -- """
     if len(sys.argv) > 1:
         if re.fullmatch(r'\d+', ID):
             employee_id = int(ID)
@@ -39,3 +40,8 @@ if __name__ == "__main__":
                     )
             for todos in todos_done:
                 print('\t{}'.format(todos.get('title')))
+
+
+if __name__ == "__main__":
+    """ -- """
+    rest_api()
