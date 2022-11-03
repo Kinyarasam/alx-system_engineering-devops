@@ -1,45 +1,34 @@
 #!/usr/bin/python3
-""" Script that uses Rest API
-
-Returns:
-    Employee information about his/her TODO list progress.
-Notes:
-    Implemented Using Recursion
-"""
-
+""" Script that uses JSONPlaceholder API to get information about employee """
+import csv
 import requests
 import sys
-import re
-
-
-"""REST API url"""
-REST_API = 'https://jsonplaceholder.typicode.com'
-ID = sys.argv[1]
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        if re.fullmatch(r'\d+', ID):
-            employee_id = int(ID)
-            employee_res = requests.get('{}/users/{}'.format(
-                REST_API,
-                employee_id)).json()
-            todos_res = requests.get('{}/todos'.format(
-                REST_API)).json()
-            employee_name = employee_res.get('name')
-            todos = list(filter(
-                lambda x: x.get('userId') == employee_id, todos_res))
-            with open(
-                    '{}.csv'.format(employee_id),
-                    'w',
-                    encoding='utf-8',
-                    ) as file:
-                for todo in todos:
-                    file.write(
-                            '"{}","{}","{}","{}"\n'.format(
-                                employee_id,
-                                employee_name,
-                                todo.get('completed'),
-                                todo.get('title')
-                                )
-                            )
+    url = 'https://jsonplaceholder.typicode.com/'
+
+    userid = sys.argv[1]
+    user = '{}users/{}'.format(url, userid)
+    res = requests.get(user)
+    json_o = res.json()
+    name = json_o.get('username')
+
+    todos = '{}todos?userId={}'.format(url, userid)
+    res = requests.get(todos)
+    tasks = res.json()
+    l_task = []
+    for task in tasks:
+        l_task.append([userid,
+                       name,
+                       task.get('completed'),
+                       task.get('title')])
+
+    filename = '{}.csv'.format(userid)
+    with open(filename, mode='w') as employee_file:
+        employee_writer = csv.writer(employee_file,
+                                     delimiter=',',
+                                     quotechar='"',
+                                     quoting=csv.QUOTE_ALL)
+        for task in l_task:
+            employee_writer.writerow(task)
