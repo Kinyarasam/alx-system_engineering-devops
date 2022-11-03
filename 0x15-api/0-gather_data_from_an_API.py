@@ -1,42 +1,25 @@
 #!/usr/bin/python3
-""" Script that uses Rest API
-"""
-
+""" Script that uses JSONPlaceholder API to get information about employee """
 import requests
 import sys
-import re
-
-
-# REST API url
-REST_API = 'https://jsonplaceholder.typicode.com'
-ID = sys.argv[1]
-
-
-def rest_api():
-    """ -- """
-    if len(sys.argv) > 1:
-        if re.fullmatch(r'\d+', ID):
-            employee_id = int(ID)
-            employee_res = requests.get('{}/users/{}'.format(
-                REST_API,
-                employee_id)).json()
-            todos_res = requests.get('{}/todos'.format(
-                REST_API)).json()
-            employee_name = employee_res.get('name')
-            todos = list(filter(
-                lambda x: x.get('userId') == employee_id, todos_res))
-            todos_done = list(filter(lambda x: x.get('completed'), todos))
-            print(
-                    'Employee {} is done with tasks({}/{}):'.format(
-                        employee_name,
-                        len(todos_done),
-                        len(todos)
-                        )
-                    )
-            for todos in todos_done:
-                print('\t{}'.format(todos.get('title')))
 
 
 if __name__ == "__main__":
-    """ -- """
-    rest_api()
+    url = 'https://jsonplaceholder.typicode.com/'
+
+    user = '{}users/{}'.format(url, sys.argv[1])
+    res = requests.get(user)
+    json_o = res.json()
+    print("Employee {} is done with tasks".format(json_o.get('name')), end="")
+
+    todos = '{}todos?userId={}'.format(url, sys.argv[1])
+    res = requests.get(todos)
+    tasks = res.json()
+    l_task = []
+    for task in tasks:
+        if task.get('completed') is True:
+            l_task.append(task)
+
+    print("({}/{}):".format(len(l_task), len(tasks)))
+    for task in l_task:
+        print("\t {}".format(task.get("title")))
