@@ -6,9 +6,6 @@ import requests
 def number_of_subscribers(subreddit):
     """
     Get the number of Subscribers
-
-    Returns:
-        (int) number of subscribers for a given subreddit
     """
     if subreddit is None or type(subreddit) is not str:
         return 0
